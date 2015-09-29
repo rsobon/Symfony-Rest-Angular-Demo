@@ -9,13 +9,11 @@
 
 namespace Acme\BlogBundle\Repository;
 
-
 use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\ORM\EntityManager;
 
-class PageHandler
+class PageHandler implements IPageHandler
 {
-    public $repository;
+    private $repository;
 
     public function __construct(ObjectManager $em, $entityClass)
     {
@@ -25,22 +23,6 @@ class PageHandler
     public function get($id)
     {
         return $this->repository->find($id);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getRepository()
-    {
-        return $this->repository;
-    }
-
-    /**
-     * @param mixed $repository
-     */
-    public function setRepository(EntityManager $repository)
-    {
-        $this->repository = $repository;
     }
 
 }

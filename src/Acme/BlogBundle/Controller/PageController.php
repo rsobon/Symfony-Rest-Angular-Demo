@@ -10,11 +10,18 @@ namespace Acme\BlogBundle\Controller;
 
 use Acme\BlogBundle\Repository\PageHandler;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations;
 use Acme\BlogBundle\Entity\Page;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends FOSRestController
 {
+    /**
+     * @Annotations\View(templateVar="page")
+     *
+     * @param $id
+     * @return Page
+     */
     public function getPageAction($id)
     {
         return $this->getOr404($id);
@@ -29,7 +36,7 @@ class PageController extends FOSRestController
         $page = $pagerepository->get($id);
 
         if (!$page) {
-            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.',$id));
+            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
         }
 
         return $page;
