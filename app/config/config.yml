@@ -55,13 +55,13 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
-    filters:
-        cssrewrite: ~
-        jsqueeze: ~
-        scssphp:
-            # the formatter must be the FQCN (don't use the 'compressed' value)
-            formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
+    bundles:        [ "AcmeConstructorClientBundle" ]
+#    filters:
+#        cssrewrite: ~
+#        jsqueeze: ~
+#        scssphp:
+#            # the formatter must be the FQCN (don't use the 'compressed' value)
+#            formatter: "Leafo\\ScssPhp\\Formatter\\Compressed"
 
 # Doctrine Configuration (used to access databases and manipulate their information)
 doctrine:
@@ -115,3 +115,8 @@ fos_rest:
         json: true
     body_listener: true
     disable_csrf_role: ROLE_API
+
+sp_bower:
+    bundles:
+        AcmeConstructorClientBundle: ~
+    assetic: false

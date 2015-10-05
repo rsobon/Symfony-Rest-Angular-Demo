@@ -21,10 +21,12 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Sp\BowerBundle\SpBowerBundle(),
 
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Acme\BlogBundle\AcmeBlogBundle(),
+            new Acme\ConstructorClientBundle\AcmeConstructorClientBundle(),
         );
 
         // Some bundles are only used while developing the application or during

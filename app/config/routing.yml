@@ -1,3 +1,9 @@
+acme_constructor_client:
+    path: /constructor
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: 'AcmeConstructorClientBundle::index.html.twig'
+
 acme_blog:
     resource: "@AcmeBlogBundle/Resources/config/routes.yml"
     type:     rest

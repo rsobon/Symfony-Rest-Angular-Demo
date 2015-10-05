@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Constructor Client</title>
+    {% stylesheets "@AcmeConstructorClientBundle/Resources/public/css/main.css" %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="all"/>
+    {% endstylesheets %}
+
+</head>
+
+<body>
+
+<div class="container">
+    <p class="bg-primary">
+        Hello
+    </p>
+</div>
+
+{% javascripts
+"bundles/acmeconstructorclient/components/jquery/dist/jquery.js"
+"bundles/acmeconstructorclient/components/bootstrap/dist/js/bootstrap.js"
+"bundles/acmeconstructorclient/components/angular/angular.js" %}
+<script src="{{ asset_url }}" type="text/javascript"></script>
+{% endjavascripts %}
+
+</body>
+
+</html>
