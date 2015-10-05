@@ -92,3 +92,5 @@ crashlytics-build.properties
 /web/css/
 /web/js/
 
+# Bower
+/src/Acme/ConstructorClientBundle/Resources/public/components/

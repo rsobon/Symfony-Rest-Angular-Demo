@@ -1,0 +1,11 @@
+<h1 class="title">All pages</h1>
+
+<ul id="todo-list">
+    {% for page in pages %}
+        <li>
+            {{ page.id }} - {{ page.title }} - {{ page.body }}
+        </li>
+    {% else %}
+        <li>empty</li>
+    {% endfor %}
+</ul>

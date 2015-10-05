@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-framework="angularjs">
 <head>
     <meta charset="utf-8">
     <title>Constructor Client</title>
@@ -9,18 +9,28 @@
 
 </head>
 
-<body>
+<body ng-app="ConstructorClient">
 
-<div class="container">
-    <p class="bg-primary">
-        Hello
-    </p>
-</div>
+<div ng-view></div>
+
+<script type="text/ng-template" id="page-list.html">
+    <div class="container">
+        <ul>
+            <li ng-repeat="page in pages">
+                {[{ page.id }]} - {[{ page.title }]} - {[{ page.body }]}
+            </li>
+        </ul>
+    </div>
+</script>
 
 {% javascripts
-"bundles/acmeconstructorclient/components/jquery/dist/jquery.js"
-"bundles/acmeconstructorclient/components/bootstrap/dist/js/bootstrap.js"
-"bundles/acmeconstructorclient/components/angular/angular.js" %}
+"@AcmeConstructorClientBundle/Resources/public/components/angular/angular.js"
+"@AcmeConstructorClientBundle/Resources/public/components/angular-route/angular-route.js"
+"@AcmeConstructorClientBundle/Resources/public/components/lodash/dist/lodash.js"
+"@AcmeConstructorClientBundle/Resources/public/components/restangular/dist/restangular.js"
+"@AcmeConstructorClientBundle/Resources/public/components/angular-bootstrap/ui-bootstrap.js"
+"@AcmeConstructorClientBundle/Resources/public/js/app.js"
+"@AcmeConstructorClientBundle/Resources/public/js/*" %}
 <script src="{{ asset_url }}" type="text/javascript"></script>
 {% endjavascripts %}
 

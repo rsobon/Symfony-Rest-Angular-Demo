@@ -16,6 +16,27 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageController extends FOSRestController
 {
+
+    /**
+     * @Annotations\View(templateVar="pages")
+     *
+     * @return Page
+     */
+    public function getPagesAction()
+    {
+        /** @var PageHandler $pageRepository */
+        $pageRepository = $this->container->get('acme_blog.page.handler');
+
+        /** @var array $pages */
+        $pages = $pageRepository->getAll();
+
+        if (!$pages) {
+            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
+        }
+
+        return $pages;
+    }
+
     /**
      * @Annotations\View(templateVar="page")
      *
@@ -24,16 +45,11 @@ class PageController extends FOSRestController
      */
     public function getPageAction($id)
     {
-        return $this->getOr404($id);
-    }
-
-    protected function getOr404($id)
-    {
-        /** @var PageHandler $pagerepository */
-        $pagerepository = $this->container->get('acme_blog.page.handler');
+        /** @var PageHandler $pageRepository */
+        $pageRepository = $this->container->get('acme_blog.page.handler');
 
         /** @var Page $page */
-        $page = $pagerepository->get($id);
+        $page = $pageRepository->get($id);
 
         if (!$page) {
             throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
