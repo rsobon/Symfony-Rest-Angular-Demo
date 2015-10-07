@@ -1,0 +1,23 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ asset('bundles/acmeblog/css/demo.css') }}" />
+{% endblock %}
+
+{% block title 'Blog Bundle' %}
+
+{% block body %}
+
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="flash-message">
+            <em>Notice</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="block">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+
+{% endblock %}

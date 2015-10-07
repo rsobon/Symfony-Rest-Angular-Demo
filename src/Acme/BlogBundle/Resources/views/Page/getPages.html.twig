@@ -1,11 +1,19 @@
-<h1 class="title">All pages</h1>
+{% extends "@AcmeBlog/layout.html.twig" %}
 
-<ul id="todo-list">
-    {% for page in pages %}
-        <li>
-            {{ page.id }} - {{ page.title }} - {{ page.body }}
-        </li>
-    {% else %}
-        <li>empty</li>
-    {% endfor %}
-</ul>
+{% block content %}
+
+    <h1 class="title">All pages</h1>
+
+    <ul id="todo-list">
+        {% for page in pages %}
+            <li>
+                {{ page.id }} -
+                <a href="{{ path('api_1_get_page', {'id': page.id}) }}"> {{ page.title }}</a> -
+                {{ page.body }}
+            </li>
+        {% else %}
+            <li>empty</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

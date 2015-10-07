@@ -1,21 +1,18 @@
 /**
- * Created by rafal on 05.10.15.
- */
-
-/**
  * The main Client app module
  *
  * @type {angular.Module}
  */
 
-var ConstructorClient = angular.module('ConstructorClient', ['ngRoute', 'restangular']);
+var ApiClient = angular.module('ApiClient', ['ngRoute', 'restangular']);
 
-ConstructorClient
+ApiClient
     .config(function ($routeProvider) {
+
         $routeProvider.
             when('/', {
                 controller: 'PageController',
-                templateUrl: '/bundles/acmeconstructorclient/partials/page/page-list.html'
+                templateUrl: assets_path + '/page/page-list.html'
             }).
             otherwise({
                 redirectTo: '/'

@@ -1,0 +1,19 @@
+{% extends "@AcmeBlog/layout.html.twig" %}
+
+{% block content %}
+
+    <h1 class="title">Edit #{{ form.vars.data.id }} - {{ form.vars.data.title }}</h1>
+
+    <form action="{{ url('api_1_post_page', {'id': form.vars.data.id}) }}" method="POST" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+        <input type="submit" value="submit">
+
+    </form>
+
+    <p>
+        <a href="{{ path('api_1_get_page', { 'id': form.vars.data.id }) }}">
+            Go back
+        </a>
+    </p>
+{% endblock %}

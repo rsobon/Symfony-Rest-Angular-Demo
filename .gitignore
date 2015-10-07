@@ -93,4 +93,4 @@ crashlytics-build.properties
 /web/js/
 
 # Bower
-/src/Acme/ConstructorClientBundle/Resources/public/components/
+/src/Acme/ApiClientBundle/Resources/public/components/

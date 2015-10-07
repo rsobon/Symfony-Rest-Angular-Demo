@@ -8,7 +8,7 @@
  * @type {angular.Module}
  */
 
-ConstructorClient
+ApiClient
     .service('PageRepository', ['Restangular', function (Restangular) {
         var PageRepository = function () {
             var resource = Restangular.allUrl('pages');

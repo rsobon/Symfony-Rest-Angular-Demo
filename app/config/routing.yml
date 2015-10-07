@@ -1,8 +1,8 @@
 acme_constructor_client:
-    path: /constructor
+    path: /ApiClient
     defaults:
         _controller: FrameworkBundle:Template:template
-        template: 'AcmeConstructorClientBundle::index.html.twig'
+        template: 'AcmeApiClientBundle::index.html.twig'
 
 acme_blog:
     resource: "@AcmeBlogBundle/Resources/config/routes.yml"

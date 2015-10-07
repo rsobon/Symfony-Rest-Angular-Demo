@@ -26,7 +26,7 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Acme\BlogBundle\AcmeBlogBundle(),
-            new Acme\ConstructorClientBundle\AcmeConstructorClientBundle(),
+            new Acme\ApiClientBundle\AcmeApiClientBundle(),
         );
 
         // Some bundles are only used while developing the application or during
