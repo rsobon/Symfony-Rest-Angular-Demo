@@ -11,6 +11,7 @@ namespace Acme\BlogBundle\Repository;
 
 use Acme\BlogBundle\Entity\IPage;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageHandler implements IPageHandler
 {
@@ -28,26 +29,30 @@ class PageHandler implements IPageHandler
 
     public function get($id)
     {
-        return $this->repository->find($id);
+        $page = $this->repository->find($id);
+
+        if(!$page) {
+            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
+        } else {
+            return $page;
+        }
     }
 
     public function getAll()
     {
-        return $this->repository->findAll();
+        $pages = $this->repository->findAll();
+
+        if(!$pages) {
+            throw new NotFoundHttpException(sprintf('The resources were not found.'));
+        } else {
+            return $pages;
+        }
     }
 
-    public function post($page)
+    public function save($page)
     {
-
         $this->em->persist($page);
         $this->em->flush();
-
-        return $this->repository->findAll();
-    }
-
-    private function processForm(IPage $page, array $parameters, $method = "PUT")
-    {
-
     }
 
 }

@@ -1,9 +1,5 @@
 /**
- * Created by rafal on 05.10.15.
- */
-
-/**
- * Services that persists and retrieves TODOs from the Symfony2 backend
+ * Services that persists and retrieves pages from the Symfony2 backend
  *
  * @type {angular.Module}
  */
@@ -22,7 +18,7 @@ ApiClient
                 return resource.put(page);
             }
         };
-        return new TodoRepository();
+        return new PageRepository();
     }])
     .factory('PageFactory', ['Restangular', function (Restangular) {
         return Restangular.all('pages');

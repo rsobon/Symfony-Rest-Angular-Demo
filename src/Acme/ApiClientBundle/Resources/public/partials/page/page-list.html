@@ -5,6 +5,7 @@
             <th>Id</th>
             <th>Title</th>
             <th>Body</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -13,10 +14,15 @@
                 {{ page.id }}
             </td>
             <td>
-                {{ page.title }}
+                <a href="#" ng-click="$event.preventDefault(); showPage(page)">
+                    {{ page.title }}
+                </a>
             </td>
             <td>
                 {{ page.body }}
+            </td>
+            <td>
+                <button class="btn btn-default" ng-click="editPage(page)"><span class="glyphicon glyphicon-cog"></span></button>
             </td>
         </tr>
         </tbody>

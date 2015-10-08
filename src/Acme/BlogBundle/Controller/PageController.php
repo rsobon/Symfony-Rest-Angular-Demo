@@ -26,15 +26,11 @@ class PageController extends FOSRestController
      */
     public function getPagesAction()
     {
-        /** @var PageHandler $pageRepository */
-        $pageRepository = $this->container->get('acme_blog.page.handler');
+        /** @var PageHandler $pageHandler */
+        $pageHandler = $this->container->get('acme_blog.page.handler');
 
         /** @var array $pages */
-        $pages = $pageRepository->getAll();
-
-        if (!$pages) {
-            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
-        }
+        $pages = $pageHandler->getAll();
 
         return $pages;
     }
@@ -47,15 +43,11 @@ class PageController extends FOSRestController
      */
     public function getPageAction($id)
     {
-        /** @var PageHandler $pageRepository */
-        $pageRepository = $this->container->get('acme_blog.page.handler');
+        /** @var PageHandler $pageHandler */
+        $pageHandler = $this->container->get('acme_blog.page.handler');
 
         /** @var Page $page */
-        $page = $pageRepository->get($id);
-
-        if (!$page) {
-            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
-        }
+        $page = $pageHandler->get($id);
 
         return $page;
     }
@@ -68,15 +60,11 @@ class PageController extends FOSRestController
      */
     public function editPageAction($id)
     {
-        /** @var PageHandler $pageRepository */
-        $pageRepository = $this->container->get('acme_blog.page.handler');
+        /** @var PageHandler $pageHandler */
+        $pageHandler = $this->container->get('acme_blog.page.handler');
 
         /** @var Page $page */
-        $page = $pageRepository->get($id);
-
-        if (!$page) {
-            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
-        }
+        $page = $pageHandler->get($id);
 
         $form = $this->createForm(new PageType(), $page);
 
@@ -95,23 +83,44 @@ class PageController extends FOSRestController
      */
     public function postPageAction(Request $request, $id)
     {
-        /** @var PageHandler $pageRepository */
-        $pageRepository = $this->container->get('acme_blog.page.handler');
+        /** @var PageHandler $pageHandler */
+        $pageHandler = $this->container->get('acme_blog.page.handler');
 
         /** @var Page $page */
-        $page = $pageRepository->get($id);
-
-        if (!$page) {
-            throw new NotFoundHttpException(sprintf('The resource \'%s\' was not found.', $id));
-        }
+        $page = $pageHandler->get($id);
 
         $form = $this->createForm(new PageType(), $page);
 
         $form->submit($request);
         if ($form->isValid()) {
-            $pageRepository->post($page);
-            $view = $this->routeRedirectView('api_1_get_page', ['id' => $page->getId()])
-            ;
+            $pageHandler->save($page);
+            $view = $this->routeRedirectView('api_1_get_page', ['id' => $page->getId()]);
+        } else {
+            $view = $this->view(['form' => $form], 400);
+        }
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @param Request $request
+     * @param int $id the page id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function putPageAction(Request $request, $id)
+    {
+        /** @var PageHandler $pageHandler */
+        $pageHandler = $this->container->get('acme_blog.page.handler');
+
+        /** @var Page $page */
+        $page = $pageHandler->get($id);
+
+        $form = $this->createForm(new PageType(), $page);
+
+        $form->submit($request);
+        if ($form->isValid()) {
+            $pageHandler->save($page);
+            $view = $this->routeRedirectView('api_1_get_page', ['id' => $page->getId()]);
         } else {
             $view = $this->view(['form' => $form], 400);
         }
