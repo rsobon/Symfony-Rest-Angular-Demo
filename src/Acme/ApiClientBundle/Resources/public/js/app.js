@@ -9,7 +9,7 @@
 var ApiClient = angular.module('ApiClient', ['ngRoute', 'restangular', 'ui.bootstrap']);
 
 ApiClient
-    .config(function ($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
 
         $routeProvider.
 
@@ -20,5 +20,23 @@ ApiClient
             otherwise({
                 redirectTo: '/'
             });
-    })
-;
+    }])
+    .config(['RestangularProvider', function (RestangularProvider) {
+        RestangularProvider.setBaseUrl('/api');
+        RestangularProvider.addRequestInterceptor(function (element, operation, what, url) {
+            var newRequest = {};
+            if (operation == 'post' || operation == 'put') {
+                what = what.split('');
+                what.pop();
+                what = what.join('');
+            }
+            if (operation == 'put') {
+                delete element._links;
+            }
+            newRequest[what] = element;
+            return newRequest;
+        });
+        RestangularProvider.setRestangularFields({
+            selfLink: '_links.self.href'
+        });
+    }]);

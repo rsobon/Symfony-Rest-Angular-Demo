@@ -101,6 +101,8 @@ fos_rest:
             json: true
         templating_formats:
             html: true
+    service:
+        serializer: serializer
     format_listener:
         rules:
             - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }

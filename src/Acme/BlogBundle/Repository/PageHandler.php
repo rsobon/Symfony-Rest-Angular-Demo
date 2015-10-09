@@ -9,11 +9,10 @@
 
 namespace Acme\BlogBundle\Repository;
 
-use Acme\BlogBundle\Entity\IPage;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PageHandler implements IPageHandler
+class PageHandler
 {
     private $repository;
     /**

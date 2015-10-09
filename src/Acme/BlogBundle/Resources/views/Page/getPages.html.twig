@@ -8,7 +8,7 @@
         {% for page in pages %}
             <li>
                 {{ page.id }} -
-                <a href="{{ path('api_1_get_page', {'id': page.id}) }}"> {{ page.title }}</a> -
+                <a href="{{ path('api_get_page', {'id': page.id}) }}"> {{ page.title }}</a> -
                 {{ page.body }}
             </li>
         {% else %}

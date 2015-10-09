@@ -1,4 +1,4 @@
 acme_blog_Page:
     type: rest
     resource: "@AcmeBlogBundle/Controller/PageController.php"
-    name_prefix:  api_1_ # naming collision
+    name_prefix:  api_ # naming collision

@@ -14,7 +14,8 @@ ApiClient
 
         $scope.pages = [];
         Restangular
-            .allUrl('api/pages', root_path + 'api/pages').getList()
+            .all('pages').getList()
+            //.allUrl('api/pages', root_path + 'api/pages').getList()
             .then(function (pages) {
                 $scope.pages = pages;
             });

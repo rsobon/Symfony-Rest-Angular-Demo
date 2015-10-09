@@ -20,7 +20,7 @@ class PageController extends FOSRestController
 {
 
     /**
-     * @Annotations\View(templateVar="pages")
+     * @Annotations\View( templateVar="pages" )
      *
      * @return Page
      */
@@ -31,8 +31,13 @@ class PageController extends FOSRestController
 
         /** @var array $pages */
         $pages = $pageHandler->getAll();
-
         return $pages;
+
+//        $data = ['pages' => $pageHandler->getAll()];
+//        $view = $this->view($data, 200)
+//            ->setTemplate('AcmeBlogBundle:Page:getPages.html.twig');
+//
+//        return $this->handleView($view);
     }
 
     /**
@@ -94,7 +99,7 @@ class PageController extends FOSRestController
         $form->submit($request);
         if ($form->isValid()) {
             $pageHandler->save($page);
-            $view = $this->routeRedirectView('api_1_get_page', ['id' => $page->getId()]);
+            $view = $this->routeRedirectView('api_get_page', ['id' => $page->getId()]);
         } else {
             $view = $this->view(['form' => $form], 400);
         }
@@ -120,7 +125,7 @@ class PageController extends FOSRestController
         $form->submit($request);
         if ($form->isValid()) {
             $pageHandler->save($page);
-            $view = $this->routeRedirectView('api_1_get_page', ['id' => $page->getId()]);
+            $view = $this->routeRedirectView('api_get_page', ['id' => $page->getId()]);
         } else {
             $view = $this->view(['form' => $form], 400);
         }
