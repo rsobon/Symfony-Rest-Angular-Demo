@@ -1,7 +1,7 @@
 /**
  * The main Client app module
  *
- * assets_path variable is set inside index.html.twig globally
+ * root_path & assets_path variables are set inside index.html.twig globally
  *
  * @type {angular.Module}
  */
@@ -12,7 +12,6 @@ ApiClient
     .config(['$routeProvider', function ($routeProvider) {
 
         $routeProvider.
-
             when('/', {
                 controller: 'PageController',
                 templateUrl: assets_path + '/page/page-list.html'
@@ -22,7 +21,7 @@ ApiClient
             });
     }])
     .config(['RestangularProvider', function (RestangularProvider) {
-        RestangularProvider.setBaseUrl('/api');
+        RestangularProvider.setBaseUrl(root_path + 'api');
         RestangularProvider.addRequestInterceptor(function (element, operation, what, url) {
             var newRequest = {};
             if (operation == 'post' || operation == 'put') {

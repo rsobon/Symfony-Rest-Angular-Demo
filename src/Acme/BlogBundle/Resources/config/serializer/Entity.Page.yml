@@ -19,17 +19,9 @@ Acme\BlogBundle\Entity\Page:
       type: integer
       groups: [restapi]
   relations:
-    -
-      rel: self
+    - rel: self
       href:
         route: api_get_page
         parameters:
           id: expr(object.getId())
         absolute: true
-    -
-      rel: expr(object.getAssociatedEventsRel())
-      embed:
-        content: expr(object.getAssociatedEvents())
-        xmlElementName: events
-        exclusion:
-          exclude_if: expr(object.getId() === 0)

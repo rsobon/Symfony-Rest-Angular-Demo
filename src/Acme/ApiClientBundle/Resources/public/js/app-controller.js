@@ -42,10 +42,6 @@ ApiClient
             });
         };
 
-        $scope.doneEditing = function (page) {
-            page.title = page.title.trim();
-            page.put();
-        };
     }]);
 
 ApiClient
@@ -59,6 +55,12 @@ ApiClient
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+        };
+
+        $scope.doneEditing = function (page) {
+            page.title = page.title.trim();
+            page.put();
+            $modalInstance.close();
         };
 
     }]);
