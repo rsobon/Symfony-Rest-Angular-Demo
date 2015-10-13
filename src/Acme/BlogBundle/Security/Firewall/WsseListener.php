@@ -4,27 +4,30 @@ namespace Acme\BlogBundle\Security\Firewall;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\NonceExpiredException;
 use Symfony\Component\Security\Http\Firewall\ListenerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Acme\BlogBundle\Security\Authentication\Token\WsseUserToken;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class WsseListener implements ListenerInterface
 {
-    protected $securityContext;
+    /**
+     * @var TokenStorageInterface $tokenStorage
+     */
+    protected $tokenStorage;
+    /**
+     * @var AuthenticationManagerInterface $authenticationManager
+     */
     protected $authenticationManager;
-    protected $logger;
 
-    public function __construct(SecurityContextInterface $securityContext, 
-                                AuthenticationManagerInterface $authenticationManager,
-                                LoggerInterface $logger)
+
+    public function __construct(TokenStorageInterface $tokenStorage,
+                                AuthenticationManagerInterface $authenticationManager)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
         $this->authenticationManager = $authenticationManager;
-        $this->logger = $logger;
     }
 
     public function handle(GetResponseEvent $event)
@@ -48,12 +51,12 @@ class WsseListener implements ListenerInterface
                 try {
                     // Authentication process 
                     $authToken = $this->authenticationManager->authenticate($token);
-                    $this->securityContext->setToken($authToken);
+                    $this->tokenStorage->setToken($authToken);
                     
                     return;
                 } catch (AuthenticationException $failed) {
                     $failedMessage = 'WSSE Login failed for '.$token->getUsername().'. Why ? '.$failed->getMessage();
-                    $this->logger->err($failedMessage);
+//                    $this->logger->err($failedMessage);
 
                     // To deny the authentication clear the token. This will redirect to the login page.
                     // $token = $this->securityContext->getToken();
@@ -70,7 +73,7 @@ class WsseListener implements ListenerInterface
                     return;
                 } catch( NonceExpiredException $expired) {
                     $failedMessage = 'WSSE Nonce Expired for '.$token->getUsername().'. Why ? '.$failed->getMessage();
-                    $this->logger->err($failedMessage);
+//                    $this->logger->err($failedMessage);
 
                     // Deny authentication with a '403 Forbidden' HTTP response
                     $response = new Response();

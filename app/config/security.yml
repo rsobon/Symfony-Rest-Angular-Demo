@@ -17,7 +17,7 @@ security:
             stateless: true
             wsse:      true
             anonymous : false
-            wsse: { lifetime: 30}
+#            wsse: { lifetime: 30}
         main:
             pattern: ^/
             form_login:

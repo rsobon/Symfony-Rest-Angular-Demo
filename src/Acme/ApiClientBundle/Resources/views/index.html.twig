@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Symfony2 Rest Api Client</title>
-    {% stylesheets
+    {% stylesheets output='js/styles'
     "@AcmeApiClientBundle/Resources/public/css/main.css"
     %}
     <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="all"/>
@@ -37,7 +37,7 @@
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
 
-{% javascripts
+{% javascripts output='js/ApiClient'
 "@AcmeApiClientBundle/Resources/public/components/angular/angular.js"
 "@AcmeApiClientBundle/Resources/public/components/angular-route/angular-route.js"
 "@AcmeApiClientBundle/Resources/public/components/angular-cookies/angular-cookies.js"

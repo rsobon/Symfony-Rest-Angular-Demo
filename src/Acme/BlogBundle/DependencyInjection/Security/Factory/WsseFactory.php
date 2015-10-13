@@ -14,7 +14,8 @@ class WsseFactory implements SecurityFactoryInterface
     {
         $providerId = 'security.authentication.provider.wsse.'.$id;
         $container
-            ->setDefinition($providerId, new DefinitionDecorator('wsse.security.authentication.provider'))
+            ->setDefinition($providerId,
+                new DefinitionDecorator('wsse.security.authentication.provider'))
             ->replaceArgument(0, new Reference($userProvider))
         ;
 
@@ -36,9 +37,9 @@ class WsseFactory implements SecurityFactoryInterface
 
     public function addConfiguration(NodeDefinition $node)
     {
-        $node
-            ->children()
-            ->scalarNode('lifetime')->defaultValue(300)
-            ->end();
+//        $node
+//            ->children()
+//            ->scalarNode('lifetime')->defaultValue(300)
+//            ->end();
     }
 }

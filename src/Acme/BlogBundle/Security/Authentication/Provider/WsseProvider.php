@@ -29,6 +29,7 @@ class WsseProvider extends ContainerAware implements AuthenticationProviderInter
         $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
         // Verify Token and register it
+        /** @var WsseUserToken $token */
         if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
             $authenticatedToken = new WsseUserToken($user->getRoles());
             $authenticatedToken->setUser($user);
