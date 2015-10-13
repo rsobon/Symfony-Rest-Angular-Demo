@@ -2,3 +2,11 @@ acme_blog_Page:
     type: rest
     resource: "@AcmeBlogBundle/Controller/PageController.php"
     name_prefix:  api_ # naming collision
+    prefix:   /api
+
+
+acme_blog_User:
+    type: rest
+    resource: "@AcmeBlogBundle/Controller/UserController.php"
+    name_prefix:  public_ # naming collision
+    prefix:   /public

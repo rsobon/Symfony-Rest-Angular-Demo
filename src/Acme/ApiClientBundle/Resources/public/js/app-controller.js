@@ -10,31 +10,33 @@
 
 
 angular.module('ApiClient.controllers', ['ngCookies'])
-    .controller('Login', ['AuthHandler', '$scope', '$window', '$cookies', 'Salt', 'Digest', function (AuthHandler, $scope, $window, $cookies, Salt, Digest) {
+    .controller('Login', ['AuthHandler', '$scope', '$window', '$cookies', 'Restangular', 'Digest', function (AuthHandler, $scope, $window, $cookies, Restangular, Digest) {
         // On Submit function
         $scope.getSalt = function () {
             var username = $scope.username;
             var password = $scope.password;
             // Get Salt
-            Salt.get({username: username}, function (data) {
-                var salt = data.salt;
-                // Encrypt password accordingly to generate secret
-                Digest.cipher(password, salt).then(function (secret) {
-                    // Display salt and secret for this example
-                    $scope.salt = salt;
-                    $scope.secret = secret;
-                    // Store auth informations in cookies for page refresh
-                    $cookies.put('username', $scope.username);
-                    $cookies.put('secret', secret);
+            Restangular
+                .oneUrl('salts', root_path + 'public/salts/' + username).get()
+                .then(function(response) {
+                    var salt = response.salt;
+                    // Encrypt password accordingly to generate secret
+                    Digest.cipher(password, salt).then(function (secret) {
+                        // Display salt and secret for this example
+                        $scope.salt = salt;
+                        $scope.secret = secret;
+                        // Store auth informations in cookies for page refresh
+                        $cookies.put('username', $scope.username);
+                        $cookies.put('secret', secret);
 
-                    $window.location = '#/pages';
-                }, function (err) {
-                    console.log(err);
+                        $window.location = '#/pages';
+                    }, function (err) {
+                        console.log(err);
+                    });
                 });
-            });
         };
     }])
-    .controller('PageController', ['$rootScope', '$scope', '$window', 'Restangular', '$modal', '$cookies', function ($rootScope, $scope, $window, Restangular, $modal, $cookies) {
+    .controller('PageController', ['$scope', '$window', 'Restangular', '$modal', function ($scope, $window, Restangular, $modal) {
 
         $scope.pages = [];
         Restangular

@@ -1,4 +1,4 @@
-angular.module('ApiClient.services', ['ngResource', 'ngCookies'])
+angular.module('ApiClient.services', ['ngCookies'])
     .factory('Base64', function () {
         var keyStr = 'ABCDEFGHIJKLMNOP' +
             'QRSTUVWXYZabcdef' +
@@ -123,49 +123,6 @@ angular.module('ApiClient.services', ['ngResource', 'ngCookies'])
             return 'UsernameToken Username="' + username + '", PasswordDigest="' + digest + '", Nonce="' + b64nonce + '", Created="' + created + '"';
         };
 
-        /*
-        TODO - port to new methods of ngCookies and Restangular!!
-         */
-        // Token Reinitializer
-        tokenHandler.clearCredentials = function () {
-            // Clear token from cache
-            $cookieStore.remove('username');
-            $cookieStore.remove('digest');
-            $cookieStore.remove('nonce');
-            $cookieStore.remove('created');
-
-            // Clear token variable
-            delete $http.defaults.headers.common['X-WSSE'];
-        };
-
-        // Token wrapper for resource actions
-        tokenHandler.wrapActions = function (resource, actions) {
-            var wrapperResource = resource;
-
-            for (var i = 0; i < actions.length; i++) {
-                tokenWrapper(wrapperResource, actions[i]);
-            }
-
-            return wrapperResource;
-        };
-
-        // Token wrapper
-        var tokenWrapper = function (resource, action) {
-            resource['_' + action] = resource[action];
-            resource[action] = function (data, success, error) {
-                if ((typeof data.username != 'undefined') && (typeof data.secret != 'undefined')) {
-                    $http.defaults.headers.common['X-WSSE'] = tokenHandler.getCredentials(data.username, data.secret);
-                    delete data.username;
-                    delete data.secret;
-                }
-                return resource['_' + action](
-                    data,
-                    success,
-                    error
-                );
-            };
-        };
-
         // Date formater to UTC
         var formatDate = function (d) {
             // Padding for date creation
@@ -201,10 +158,6 @@ angular.module('ApiClient.services', ['ngResource', 'ngCookies'])
 
         return authHandler;
 
-    }])
-    .factory('Salt', ['$resource', function ($resource) {
-        // Service to load Salt
-        return $resource('/user/:username/salt', {username: '@id'});
     }])
     .factory('Digest', ['$q', function ($q) {
         var factory = {

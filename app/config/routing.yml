@@ -1,19 +1,12 @@
-acme_constructor_client:
+acme_api_client:
     path: /ApiClient
     defaults:
         _controller: FrameworkBundle:Template:template
         template: 'AcmeApiClientBundle::index.html.twig'
 
-app:
-    resource: "@AcmeBlogBundle/Controller/UserController.php"
-    type:     annotation
-    prefix:   /user
-
-
 acme_blog:
     resource: "@AcmeBlogBundle/Resources/config/routes.yml"
     type:     rest
-    prefix:   /api
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

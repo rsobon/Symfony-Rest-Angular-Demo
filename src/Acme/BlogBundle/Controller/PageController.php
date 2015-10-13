@@ -32,12 +32,6 @@ class PageController extends FOSRestController
         /** @var array $pages */
         $pages = $pageHandler->getAll();
         return $pages;
-
-//        $data = ['pages' => $pageHandler->getAll()];
-//        $view = $this->view($data, 200)
-//            ->setTemplate('AcmeBlogBundle:Page:getPages.html.twig');
-//
-//        return $this->handleView($view);
     }
 
     /**
