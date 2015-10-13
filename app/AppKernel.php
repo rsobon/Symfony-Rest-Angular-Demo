@@ -22,10 +22,12 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sp\BowerBundle\SpBowerBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
 
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle(),
+
             new Acme\BlogBundle\AcmeBlogBundle(),
             new Acme\ApiClientBundle\AcmeApiClientBundle(),
         );

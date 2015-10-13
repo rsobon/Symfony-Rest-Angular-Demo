@@ -1,32 +1,33 @@
-<div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Body</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="page in pages">
-            <td>
-                {{ $index }}
-            </td>
-            <td>
-                <a href="#" ng-click="$event.preventDefault(); showPage(page)">
-                    {{ page.title }}
-                </a>
-            </td>
-            <td>
-                {{ page.body }}
-            </td>
-            <td>
-                <button class="btn btn-default" ng-click="editPage(page)"><span class="glyphicon glyphicon-cog"></span></button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="page in pages">
+        <td>
+            {{ $index }}
+        </td>
+        <td>
+            <a href="#" ng-click="showPage(page)">
+                {{ page.title }}
+            </a>
+        </td>
+        <td>
+            {{ page.body }}
+        </td>
+        <td>
+            <button class="btn btn-default" ng-click="editPage(page)">
+                <span class="glyphicon glyphicon-cog"></span>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 
 

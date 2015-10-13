@@ -6,36 +6,58 @@
  * @type {angular.Module}
  */
 
-var ApiClient = angular.module('ApiClient', ['ngRoute', 'restangular', 'ui.bootstrap']);
-
-ApiClient
+angular.module('ApiClient', ['ngRoute', 'restangular', 'ui.bootstrap', 'ApiClient.controllers', 'ApiClient.services'])
     .config(['$routeProvider', function ($routeProvider) {
-
-        $routeProvider.
-            when('/', {
+        $routeProvider
+            .when('/pages', {
                 controller: 'PageController',
                 templateUrl: assets_path + '/page/page-list.html'
-            }).
-            otherwise({
-                redirectTo: '/'
+            })
+            .when('/login', {
+                controller: 'Login',
+                templateUrl: assets_path + '/login.html'
+            })
+            .otherwise({
+                redirectTo: '/login'
             });
     }])
-    .config(['RestangularProvider', function (RestangularProvider) {
-        RestangularProvider.setBaseUrl(root_path + 'api');
-        RestangularProvider.addRequestInterceptor(function (element, operation, what, url) {
-            var newRequest = {};
-            if (operation == 'post' || operation == 'put') {
-                what = what.split('');
-                what.pop();
-                what = what.join('');
-            }
-            if (operation == 'put') {
-                delete element._links;
-            }
-            newRequest[what] = element;
-            return newRequest;
-        });
-        RestangularProvider.setRestangularFields({
-            selfLink: '_links.self.href'
-        });
+    .config(['RestangularProvider', '$injector', 'TokenHandlerProvider', 'AuthHandlerProvider', function (RestangularProvider, $injector, TokenHandlerProvider, AuthHandlerProvider) {
+
+        var TokenHandler = $injector.instantiate(TokenHandlerProvider.$get);
+        var AuthHandler = $injector.instantiate(AuthHandlerProvider.$get);
+
+        RestangularProvider
+            .setBaseUrl(root_path + 'api')
+            .addRequestInterceptor(function (element, operation, what, url) {
+                var newRequest = {};
+                if (operation == 'post' || operation == 'put') {
+                    what = what.split('');
+                    what.pop();
+                    what = what.join('');
+                }
+                if (operation == 'put') {
+                    delete element._links;
+                }
+                newRequest[what] = element;
+                return newRequest;
+            })
+            .setRestangularFields({
+                selfLink: '_links.self.href'
+            })
+            .addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
+
+                // Here is my header generation.
+                headers['X-WSSE'] =
+                    TokenHandler.getCredentials(
+                        AuthHandler.username,
+                        AuthHandler.secret
+                    );
+
+                return {
+                    element: element,
+                    headers: headers,
+                    params: params,
+                    httpConfig: httpConfig
+                };
+            });
     }]);

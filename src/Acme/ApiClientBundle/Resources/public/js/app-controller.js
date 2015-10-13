@@ -9,15 +9,57 @@
  */
 
 
-ApiClient
-    .controller('PageController', ['$scope', 'Restangular', '$modal', function ($scope, Restangular, $modal) {
+angular.module('ApiClient.controllers', ['ngCookies'])
+    .controller('Login', ['$rootScope', '$scope', '$window', '$cookies', 'Salt', 'Digest', function ($rootScope, $scope, $window, $cookies, Salt, Digest) {
+        // On Submit function
+        $scope.getSalt = function () {
+            var username = $scope.username;
+            var password = $scope.password;
+            // Get Salt
+            Salt.get({username: username}, function (data) {
+                var salt = data.salt;
+                // Encrypt password accordingly to generate secret
+                Digest.cipher(password, salt).then(function (secret) {
+                    // Display salt and secret for this example
+                    $scope.salt = salt;
+                    $scope.secret = secret;
+                    // Store auth informations in cookies for page refresh
+                    $cookies.put('username', $scope.username);
+                    $cookies.put('secret', secret);
+                    //$cookies.username = $scope.username;
+                    //$cookies.secret = secret;
+                    // Store auth informations in rootScope for multi views access
+                    $rootScope.userAuth = {
+                        username: $scope.username,
+                        secret: $scope.secret
+                    };
+                    $window.location = '#/pages';
+                }, function (err) {
+                    console.log(err);
+                });
+            });
+        };
+    }])
+    .controller('PageController', ['$rootScope', '$scope', '$window', 'Restangular', '$modal', '$cookies', function ($rootScope, $scope, $window, Restangular, $modal, $cookies) {
+
+        // If auth information in cookie
+        if (typeof $cookies.get('username') != "undefined" && typeof $cookies.get('secret') != "undefined") {
+            $rootScope.userAuth = {
+                username: $cookies.get('username'),
+                secret: $cookies.get('secret')
+            };
+        }
+        // If not authenticated, go to login
+        if (typeof $rootScope.userAuth == "undefined") {
+            $window.location = '#/login';
+            return;
+        }
 
         $scope.pages = [];
         Restangular
             .all('pages').getList()
-            //.allUrl('api/pages', root_path + 'api/pages').getList()
-            .then(function (pages) {
-                $scope.pages = pages;
+            .then(function (response) {
+                $scope.pages = response;
             });
 
         $scope.showPage = function (page) {
@@ -42,9 +84,7 @@ ApiClient
             });
         };
 
-    }]);
-
-ApiClient
+    }])
     .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'page', function ($scope, $modalInstance, page) {
 
         $scope.page = page;

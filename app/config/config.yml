@@ -31,7 +31,7 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: false
+    csrf_protection: ~
     validation:      { enable_annotations: true }
     templating:
         engines: ['twig']
@@ -101,8 +101,6 @@ fos_rest:
             json: true
         templating_formats:
             html: true
-    service:
-        serializer: serializer
     format_listener:
         rules:
             - { path: ^/, priorities: [ html, json, xml ], fallback_format: ~, prefer_extension: true }
@@ -122,3 +120,8 @@ sp_bower:
     bundles:
         AcmeApiClientBundle: ~
     assetic: false
+
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: Acme\BlogBundle\Entity\User
