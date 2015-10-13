@@ -10,7 +10,7 @@
 
 
 angular.module('ApiClient.controllers', ['ngCookies'])
-    .controller('Login', ['$rootScope', '$scope', '$window', '$cookies', 'Salt', 'Digest', function ($rootScope, $scope, $window, $cookies, Salt, Digest) {
+    .controller('Login', ['AuthHandler', '$scope', '$window', '$cookies', 'Salt', 'Digest', function (AuthHandler, $scope, $window, $cookies, Salt, Digest) {
         // On Submit function
         $scope.getSalt = function () {
             var username = $scope.username;
@@ -26,13 +26,7 @@ angular.module('ApiClient.controllers', ['ngCookies'])
                     // Store auth informations in cookies for page refresh
                     $cookies.put('username', $scope.username);
                     $cookies.put('secret', secret);
-                    //$cookies.username = $scope.username;
-                    //$cookies.secret = secret;
-                    // Store auth informations in rootScope for multi views access
-                    $rootScope.userAuth = {
-                        username: $scope.username,
-                        secret: $scope.secret
-                    };
+
                     $window.location = '#/pages';
                 }, function (err) {
                     console.log(err);
@@ -41,19 +35,6 @@ angular.module('ApiClient.controllers', ['ngCookies'])
         };
     }])
     .controller('PageController', ['$rootScope', '$scope', '$window', 'Restangular', '$modal', '$cookies', function ($rootScope, $scope, $window, Restangular, $modal, $cookies) {
-
-        // If auth information in cookie
-        if (typeof $cookies.get('username') != "undefined" && typeof $cookies.get('secret') != "undefined") {
-            $rootScope.userAuth = {
-                username: $cookies.get('username'),
-                secret: $cookies.get('secret')
-            };
-        }
-        // If not authenticated, go to login
-        if (typeof $rootScope.userAuth == "undefined") {
-            $window.location = '#/login';
-            return;
-        }
 
         $scope.pages = [];
         Restangular

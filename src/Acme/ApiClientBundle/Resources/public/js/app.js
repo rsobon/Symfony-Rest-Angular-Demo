@@ -46,11 +46,10 @@ angular.module('ApiClient', ['ngRoute', 'restangular', 'ui.bootstrap', 'ApiClien
             })
             .addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
 
-                // Here is my header generation.
                 headers['X-WSSE'] =
                     TokenHandler.getCredentials(
-                        AuthHandler.username,
-                        AuthHandler.secret
+                        AuthHandler.username(),
+                        AuthHandler.secret()
                     );
 
                 return {

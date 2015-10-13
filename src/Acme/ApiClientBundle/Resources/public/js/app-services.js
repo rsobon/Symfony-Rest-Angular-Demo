@@ -123,6 +123,9 @@ angular.module('ApiClient.services', ['ngResource', 'ngCookies'])
             return 'UsernameToken Username="' + username + '", PasswordDigest="' + digest + '", Nonce="' + b64nonce + '", Created="' + created + '"';
         };
 
+        /*
+        TODO - port to new methods of ngCookies and Restangular!!
+         */
         // Token Reinitializer
         tokenHandler.clearCredentials = function () {
             // Clear token from cache
@@ -180,12 +183,24 @@ angular.module('ApiClient.services', ['ngResource', 'ngCookies'])
 
         return tokenHandler;
     }])
-    .factory('AuthHandler', ['$cookies', function ($cookies) {
-        // Service to load Salt
-        return {
-            username: $cookies.get('username'),
-            secret: $cookies.get('secret')
+    .factory('AuthHandler', ['$cookies', '$window', function ($cookies, $window) {
+
+        var authHandler = {};
+        // If not authenticated, go to login
+        if (typeof $cookies.get('username') == "undefined" || typeof $cookies.get('secret') == "undefined") {
+            $window.location = '#/login';
+        }
+
+        authHandler.username = function() {
+            return $cookies.get('username');
         };
+
+        authHandler.secret = function() {
+            return $cookies.get('secret');
+        };
+
+        return authHandler;
+
     }])
     .factory('Salt', ['$resource', function ($resource) {
         // Service to load Salt
