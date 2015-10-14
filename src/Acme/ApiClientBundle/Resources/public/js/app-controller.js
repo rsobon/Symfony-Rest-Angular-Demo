@@ -10,7 +10,7 @@
 
 
 angular.module('ApiClient.controllers', ['ngCookies'])
-    .controller('Login', ['AuthHandler', '$scope', '$window', '$cookies', 'Restangular', 'Digest', function (AuthHandler, $scope, $window, $cookies, Restangular, Digest) {
+    .controller('Login', ['AuthHandler', '$scope', '$window', '$cookies', 'Restangular', 'Digest', '$modal', function (AuthHandler, $scope, $window, $cookies, Restangular, Digest, $modal) {
         // On Submit function
         $scope.getSalt = function () {
             var username = $scope.username;
@@ -25,9 +25,22 @@ angular.module('ApiClient.controllers', ['ngCookies'])
                         // Display salt and secret for this example
                         $scope.salt = salt;
                         $scope.secret = secret;
+
+                        $modal.open({
+                            animation: true,
+                            templateUrl: assets_path + '/common/modal.html',
+                            controller: 'ModalInstanceCtrl',
+                            size: 'lg',
+                            resolve: {
+                                items: function () {
+                                    return [$scope.salt, $scope.secret];
+                                }
+                            }
+                        });
+
                         // Store auth informations in cookies for page refresh
                         $cookies.put('username', $scope.username);
-                        $cookies.put('secret', secret);
+                        $cookies.put('secret', $scope.secret);
 
                         $window.location = '#/pages';
                     }, function (err) {
@@ -49,7 +62,7 @@ angular.module('ApiClient.controllers', ['ngCookies'])
             $modal.open({
                 animation: true,
                 templateUrl: assets_path + '/page/page-show.html',
-                controller: 'ModalInstanceCtrl',
+                controller: 'PageModalInstanceCtrl',
                 resolve: {
                     page: page
                 }
@@ -60,7 +73,7 @@ angular.module('ApiClient.controllers', ['ngCookies'])
             $modal.open({
                 animation: true,
                 templateUrl: assets_path + '/page/page-edit.html',
-                controller: 'ModalInstanceCtrl',
+                controller: 'PageModalInstanceCtrl',
                 resolve: {
                     page: page
                 }
@@ -68,7 +81,7 @@ angular.module('ApiClient.controllers', ['ngCookies'])
         };
 
     }])
-    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'page', function ($scope, $modalInstance, page) {
+    .controller('PageModalInstanceCtrl', ['$scope', '$modalInstance', 'page', function ($scope, $modalInstance, page) {
 
         $scope.page = page;
 
@@ -84,6 +97,19 @@ angular.module('ApiClient.controllers', ['ngCookies'])
             page.title = page.title.trim();
             page.put();
             $modalInstance.close();
+        };
+
+    }])
+    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function ($scope, $modalInstance, items) {
+
+        $scope.items = items;
+
+        $scope.ok = function () {
+            $modalInstance.close();
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
 
     }]);

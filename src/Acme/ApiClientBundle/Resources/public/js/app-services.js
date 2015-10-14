@@ -119,6 +119,10 @@ angular.module('ApiClient.services', ['ngCookies'])
             // Base64 Encode digest
             var b64nonce = Base64.encode(nonce);
 
+            //console.log(username);
+            //console.log(digest);
+            //console.log(b64nonce);
+            //console.log(created);
             // Return generated token
             return 'UsernameToken Username="' + username + '", PasswordDigest="' + digest + '", Nonce="' + b64nonce + '", Created="' + created + '"';
         };
