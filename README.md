@@ -38,6 +38,7 @@ Dependencies
   	* Frontend theme
 
 Composer and SpBower will automatically install all dependencies (see Installation below)
+Dependencies are defined in the "composer.json" and "src/Acme/ApiClientBundle/Resources/config/bower/bower.json"
 
 Installation
 ------------
@@ -51,7 +52,7 @@ $ composer install
 ```
 
 Composer will automatically download all dependencies listed above.
-It will also automatically run "assets:install --symlink" and "assetic:dump" commands, which are required for AngularJS to access all public resources (JavaScript files and HTML partials)
+It will also automatically run "assets:install --symlink" and "assetic:dump" commands, which will make Assetic install all public resources (JavaScript files and HTML partials) required for ApiClient application.
 
 I suggest to install MySQL on the server and adjust parameters.yml accordingly. Then we can run following commands to install database and sample data:
 
