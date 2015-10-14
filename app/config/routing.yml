@@ -8,5 +8,5 @@ acme_blog:
     resource: "@AcmeBlogBundle/Resources/config/routes.yml"
     type:     rest
 
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+#fos_user:
+#    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
