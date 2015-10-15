@@ -4,11 +4,11 @@ Symfony Rest Angular Demo
 This application is a combination of:
   * REST API backend written in Symfony2 with [FOSRestBundle](https://github.com/FriendsOfSymfony/FOSRestBundle)
   * [Custom authentication provider](http://symfony.com/doc/current/cookbook/security/custom_authentication_provider.html) for the REST API via WSSE
-  * Client written in AngularJS consuming a RESTful Web Service
+  * MVC frontend client written in AngularJS consuming a RESTful Web Service
 
-RESTful backend is completely separated from the Client application (and hidden behind WSSE firewall). For convenience components (backend and frontend) are held in two separate Symfony bundles:
+RESTful backend is completely separated from the MVC frontend client application (and hidden behind WSSE firewall). For convenience components (backend and frontend) are held in two separate Symfony bundles:
   * "BlogBundle" is the REST API backend. Entities, controllers, security provider, forms and whole business logic is located here
-  * "ApiClientBundle" is the AngularJS frontend. It is basically collection of HTML, CSS and JavaScript resources which are automatically installed to the /web directory with Assetic.
+  * "ApiClientBundle" is the AngularJS frontend. It is basically collection of HTML, CSS and JavaScript resources which are automatically installed to the /web directory via Assetic.
 
 I used variety of projects as resources:
   * [REST API Symfony2: the best 2013 way](https://github.com/liuggio/symfony2-rest-api-the-best-2013-way/)
@@ -52,7 +52,7 @@ $ composer install
 ```
 
 Composer will automatically download all dependencies listed above.
-It will also automatically run "assets:install --symlink" and "assetic:dump" commands, which will make Assetic install all public resources (JavaScript files and HTML partials) required for ApiClient application.
+It will also automatically run "assets:install --symlink" and "assetic:dump" commands, which will make Assetic install all public resources (JavaScript files and HTML partials) required for MVC frontend client.
 
 I suggest to install MySQL on the server and adjust parameters.yml accordingly. Then we can run following commands to install database and sample data:
 
@@ -82,7 +82,7 @@ $ app/console server:run
 ```
 
 After that you can access the REST API!
-Now you can navigate to login page of the ApiClient frontend application:
+Now you can navigate to login page of the MVC frontend client application:
 
 ```
 http://127.0.0.1:8000/ApiClient#/login
