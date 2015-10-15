@@ -1,6 +1,30 @@
-<form ng-submit="getSalt()">
-    <input type="text" ng-model="username" class="form-control" placeholder="username"><br>
-    <input type="password" ng-model="password" class="form-control" placeholder="passaword"><br>
-    <input class="btn btn-primary" type="submit" value="login">
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-10">
+        <h1>Login</h1>
+    </div>
+</div>
+
+<form ng-submit="getSalt()" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="username">Username</label>
+
+        <div class="col-sm-4">
+            <input type="text" ng-model="username" id="username" class="form-control" placeholder="username">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="password">Password</label>
+
+        <div class="col-sm-4">
+            <input type="password" ng-model="password" id="password" class="form-control" placeholder="password">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
+    </div>
 </form>
 

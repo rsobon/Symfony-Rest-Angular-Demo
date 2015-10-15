@@ -1,11 +1,16 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{ page.title }}</h3>
+    <h3 class="modal-title">{{ title }}</h3>
 </div>
 <div class="modal-body">
-    <p ng-repeat="item in items">
-        {{ item }}
+    <p ng-repeat="paragraph in introduction">
+        {{ paragraph }}
     </p>
+
+    <div class="form-group" ng-repeat="(key, value) in items">
+        <label>{{ key }}</label>
+        <input class="form-control" value="{{ value }}" readonly title="{{ key }}"/>
+    </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-warning" type="button" ng-click="ok()">Close</button>
 </div>

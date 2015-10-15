@@ -18,7 +18,7 @@ angular.module('ApiClient.controllers', ['ngCookies'])
             // Get Salt
             Restangular
                 .oneUrl('salts', root_path + 'public/salts/' + username).get()
-                .then(function(response) {
+                .then(function (response) {
                     var salt = response.salt;
                     // Encrypt password accordingly to generate secret
                     Digest.cipher(password, salt).then(function (secret) {
@@ -32,8 +32,18 @@ angular.module('ApiClient.controllers', ['ngCookies'])
                             controller: 'ModalInstanceCtrl',
                             size: 'lg',
                             resolve: {
-                                items: function () {
-                                    return [$scope.salt, $scope.secret];
+                                items: {
+                                    Salt: $scope.salt,
+                                    Secret: $scope.secret
+                                },
+                                title: function () {
+                                    return "Login result"
+                                },
+                                introduction: function () {
+                                    return [
+                                        "Salt value is pulled from the database at following URL: " + root_path + 'public/salts/' + username,
+                                        "Secret is your hashed, salted password, saved in cookies"
+                                    ]
                                 }
                             }
                         });
@@ -100,16 +110,15 @@ angular.module('ApiClient.controllers', ['ngCookies'])
         };
 
     }])
-    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function ($scope, $modalInstance, items) {
+    .controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', 'title', 'introduction', function ($scope, $modalInstance, items, title, introduction) {
 
         $scope.items = items;
+        $scope.title = title;
+        $scope.introduction = introduction;
+
 
         $scope.ok = function () {
             $modalInstance.close();
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
         };
 
     }]);
