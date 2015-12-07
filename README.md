@@ -6,9 +6,11 @@ This application is a combination of:
   * [Custom authentication provider](http://symfony.com/doc/current/cookbook/security/custom_authentication_provider.html) for the REST API via WSSE
   * MVC frontend client written in AngularJS consuming a RESTful Web Service
 
-RESTful backend is completely separated from the MVC frontend client application (and hidden behind WSSE firewall). For convenience components (backend and frontend) are held in two separate Symfony bundles:
+Application components (backend and frontend) are held in two separate Symfony bundles:
   * "BlogBundle" is the REST API backend. Entities, controllers, security provider, forms and whole business logic is located here
   * "ApiClientBundle" is the AngularJS frontend. It is basically collection of HTML, CSS and JavaScript resources which are automatically installed to the /web directory via Assetic.
+
+Advanced note: **best practice is to completely separate AngularJS frontend from the REST API**. However in current project I decided to hold both frontend & backend in Symfony for simplicity; separating these two would make installation, user authentication and package management more complicated. In real environment you could consider two separate Git repositories (Symfony backend & Angular frontent), different domains in your webserver, and Cross-Origin Resource Sharing.
 
 I used variety of projects as resources:
   * [REST API Symfony2: the best 2013 way](https://github.com/liuggio/symfony2-rest-api-the-best-2013-way/)
